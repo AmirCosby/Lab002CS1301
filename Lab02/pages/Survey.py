@@ -60,9 +60,12 @@ with st.form("survey_form"):
         #    - Make sure to open the file in 'append' mode ('a').
         #    - Don't forget to add a newline character '\n' at the end.
         
-        st.success("Your data has been submitted!")
-        st.write(f"Your data for **{category_input}** has been saved.")
+        if not os.path.exists(file_path) or os.path.getsize(file_path) == 0:
+            new_row.to_csv(file_path, index=False)
+        else:
+            new_row.to_csv(file_path, mode="a", header=False, index=False)
 
+        st.success("Your data has been saved!")
 
 # DATA DISPLAY
 # This section shows the current contents of the CSV file, which helps in debugging.
@@ -70,10 +73,8 @@ st.divider() # Adds a horizontal line for visual separation.
 st.header("Current Data in CSV")
 
 # Check if the CSV file exists and is not empty before trying to read it.
-if os.path.exists('data.csv') and os.path.getsize('data.csv') > 0:
-    # Read the CSV file into a pandas DataFrame.
-    current_data_df = pd.read_csv('data.csv')
-    # Display the DataFrame as a table.
-    st.dataframe(current_data_df)
+if os.path.exists("data.csv") and os.path.getsize("data.csv") > 0:
+    df = pd.read_csv("data.csv")
+    st.dataframe(df)
 else:
     st.warning("The 'data.csv' file is empty or does not exist yet.")
