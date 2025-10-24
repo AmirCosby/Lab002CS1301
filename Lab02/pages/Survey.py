@@ -61,7 +61,7 @@ with st.form("survey_form"):
         #    - Don't forget to add a newline character '\n' at the end.
         
         st.success("Your data has been submitted!")
-        st.write(f"You entered: **Category:** {category_input}, **Value:** {value_input}")
+        st.write(f"Your data for **{category_input}** has been saved.")
 
 
 # DATA DISPLAY
